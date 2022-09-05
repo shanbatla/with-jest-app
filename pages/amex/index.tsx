@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 
 export default function Amex() {
-  const [todoList, setTodoList] = useState<Array<string | null>>([])
+  const [todoList, setTodoList] = useState<Array<string>>([])
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -10,6 +10,11 @@ export default function Amex() {
       setTodoList([...todoList, inputRef.current.value])
       inputRef.current.value = ''
     }
+  }
+
+  function removeTodo(idx: number) {
+    const newTododList = [...todoList.slice(0, idx), ...todoList.slice(idx + 1, todoList.length + 1)]
+    setTodoList(newTododList)
   }
 
   return (
@@ -29,7 +34,7 @@ export default function Amex() {
               <div key={idx}>
                 <div>{todo}</div>
                 <div>
-                  <button>Remove</button>
+                  <button onClick={() => removeTodo(idx)}>Remove</button>
                   <button>Move to In Progress</button>
                 </div>
               </div>
