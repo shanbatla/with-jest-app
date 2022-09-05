@@ -8,6 +8,7 @@ export default function Amex() {
   function addTodo(): void {
     if (inputRef.current !== null && inputRef.current.value.length > 0) {
       setTodoList([...todoList, inputRef.current.value])
+      inputRef.current.value = ''
     }
   }
 
@@ -25,7 +26,13 @@ export default function Amex() {
           <h1>To Do:</h1>
           {todoList.map((todo, idx) => {
             return (
-              <div key={idx}>{todo}</div>
+              <div key={idx}>
+                <div>{todo}</div>
+                <div>
+                  <button>Remove</button>
+                  <button>Move to In Progress</button>
+                </div>
+              </div>
             )
           })}
         </div>
