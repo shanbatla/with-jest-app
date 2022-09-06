@@ -1,20 +1,29 @@
 import React, { useRef, useState } from "react";
 
 export default function Amex() {
-  const [todoList, setTodoList] = useState<Array<string>>([])
+  const [todoList, setTodoList] = useState<Array<string>>([]);
+  const [inProgressList, setInProgressList] = useState<Array<string>>([]);
 
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null);
 
   function addTodo(): void {
     if (inputRef.current !== null && inputRef.current.value.length > 0) {
-      setTodoList([...todoList, inputRef.current.value])
-      inputRef.current.value = ''
+      setTodoList([...todoList, inputRef.current.value]);
+      inputRef.current.value = "";
     }
   }
 
-  function removeTodo(idx: number) {
-    const newTododList = [...todoList.slice(0, idx), ...todoList.slice(idx + 1, todoList.length + 1)]
-    setTodoList(newTododList)
+  function removeTodo(idx: number): void {
+    const newTododList = [
+      ...todoList.slice(0, idx),
+      ...todoList.slice(idx + 1, todoList.length + 1),
+    ];
+    setTodoList(newTododList);
+  }
+
+  function moveToInprogress(idx: number): void {
+    setInProgressList([...inProgressList, todoList[idx]]);
+    removeTodo(idx);
   }
 
   return (
@@ -35,14 +44,27 @@ export default function Amex() {
                 <div>{todo}</div>
                 <div>
                   <button onClick={() => removeTodo(idx)}>Remove</button>
-                  <button>Move to In Progress</button>
+                  <button onClick={() => moveToInprogress(idx)}>
+                    Move to In Progress
+                  </button>
                 </div>
               </div>
-            )
+            );
           })}
         </div>
         <div className="inprogress">
           <h1>In Progress:</h1>
+          {inProgressList.map((inProgressItem, idx) => {
+            return (
+              <div key={idx}>
+                <div>{inProgressItem}</div>
+                <div>
+                  <button>Move back</button>
+                  <button>Move to done</button>
+                </div>
+              </div>
+            );
+          })}
         </div>
         <div className="done">
           <h1>Done:</h1>
