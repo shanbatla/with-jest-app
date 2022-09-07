@@ -17,11 +17,7 @@ export default function Amex() {
   }
 
   function removeTodo(idx: number): void {
-    const newTodoList = [
-      ...todoList.slice(0, idx),
-      ...todoList.slice(idx + 1, todoList.length + 1),
-    ];
-    setTodoList(newTodoList);
+    setTodoList(removeItem(idx, todoList));
   }
 
   function moveToInprogress(idx: number): void {
@@ -31,40 +27,30 @@ export default function Amex() {
 
   function moveBackToTodo(idx: number): void {
     setTodoList([...todoList, inProgressList[idx]]);
-    const newInProgressList = [
-      ...inProgressList.slice(0, idx),
-      ...inProgressList.slice(idx + 1, inProgressList.length + 1),
-    ];
-    setInProgressList(newInProgressList);
+    setInProgressList(removeItem(idx, inProgressList));
   }
 
   function moveToDone(idx: number): void {
     setDoneList([...doneList, inProgressList[idx]]);
-    const newInProgressList = [
-      ...inProgressList.slice(0, idx),
-      ...inProgressList.slice(idx + 1, inProgressList.length + 1),
-    ];
-    setInProgressList(newInProgressList);
+    setInProgressList(removeItem(idx, inProgressList));
   }
 
   function moveBackToInProgress(idx: number): void {
     setInProgressList([...inProgressList, doneList[idx]]);
-    const newDoneList = [
-      ...doneList.slice(0, idx),
-      ...doneList.slice(idx + 1, doneList.length + 1),
-    ];
-    setDoneList(newDoneList);
+    setDoneList(removeItem(idx, doneList));
   }
 
   function remove(idx: number): void {
-    const newDoneList = [
-      ...doneList.slice(0, idx),
-      ...doneList.slice(idx + 1, doneList.length + 1),
-    ];
-    setDoneList(newDoneList);
+    setDoneList(removeItem(idx, doneList));
   }
 
-  function removeItem(idx: number, list: ItemList) {}
+  function removeItem(idx: number, list: ItemList): ItemList {
+    const newList = [
+      ...list.slice(0, idx),
+      ...list.slice(idx + 1, list.length + 1),
+    ];
+    return newList;
+  }
 
   return (
     <div className="amex-container">
