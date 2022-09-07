@@ -1,9 +1,11 @@
 import React, { useRef, useState } from "react";
 
+type ItemList = Array<string>;
+
 export default function Amex() {
-  const [todoList, setTodoList] = useState<Array<string>>([]);
-  const [inProgressList, setInProgressList] = useState<Array<string>>([]);
-  const [doneList, setDoneList] = useState<Array<string>>([]);
+  const [todoList, setTodoList] = useState<ItemList>([]);
+  const [inProgressList, setInProgressList] = useState<ItemList>([]);
+  const [doneList, setDoneList] = useState<ItemList>([]);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -61,6 +63,8 @@ export default function Amex() {
     ];
     setDoneList(newDoneList);
   }
+
+  function removeItem(idx: number, list: ItemList) {}
 
   return (
     <div className="amex-container">
