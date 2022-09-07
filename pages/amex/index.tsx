@@ -27,6 +27,7 @@ export default function Amex() {
   }
 
   function moveBackToTodo(idx: number): void {
+    setTodoList([...todoList, inProgressList[idx]]);
     const newInProgressList = [
       ...inProgressList.slice(0, idx),
       ...inProgressList.slice(idx + 1, inProgressList.length + 1),
