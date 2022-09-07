@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 export default function Amex() {
   const [todoList, setTodoList] = useState<Array<string>>([]);
   const [inProgressList, setInProgressList] = useState<Array<string>>([]);
+  const [doneList, setDoneList] = useState<Array<string>>([]);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -28,6 +29,15 @@ export default function Amex() {
 
   function moveBackToTodo(idx: number): void {
     setTodoList([...todoList, inProgressList[idx]]);
+    const newInProgressList = [
+      ...inProgressList.slice(0, idx),
+      ...inProgressList.slice(idx + 1, inProgressList.length + 1),
+    ];
+    setInProgressList(newInProgressList);
+  }
+
+  function moveToDone(idx: number): void {
+    setDoneList([...doneList, inProgressList[idx]]);
     const newInProgressList = [
       ...inProgressList.slice(0, idx),
       ...inProgressList.slice(idx + 1, inProgressList.length + 1),
@@ -69,7 +79,7 @@ export default function Amex() {
                 <div>{inProgressItem}</div>
                 <div>
                   <button onClick={() => moveBackToTodo(idx)}>Move back</button>
-                  <button>Move to done</button>
+                  <button onClick={() => moveToDone(idx)}>Move to done</button>
                 </div>
               </div>
             );
@@ -77,6 +87,15 @@ export default function Amex() {
         </div>
         <div className="done">
           <h1>Done:</h1>
+          {doneList.map((doneItem, idx) => {
+            return (
+              <div key={idx}>
+                <div>{doneItem}</div>
+                <button>Move back</button>
+                <button>Remove</button>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
