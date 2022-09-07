@@ -14,16 +14,24 @@ export default function Amex() {
   }
 
   function removeTodo(idx: number): void {
-    const newTododList = [
+    const newTodoList = [
       ...todoList.slice(0, idx),
       ...todoList.slice(idx + 1, todoList.length + 1),
     ];
-    setTodoList(newTododList);
+    setTodoList(newTodoList);
   }
 
   function moveToInprogress(idx: number): void {
     setInProgressList([...inProgressList, todoList[idx]]);
     removeTodo(idx);
+  }
+
+  function moveBackToTodo(idx: number): void {
+    const newInProgressList = [
+      ...inProgressList.slice(0, idx),
+      ...inProgressList.slice(idx + 1, inProgressList.length + 1),
+    ];
+    setInProgressList(newInProgressList);
   }
 
   return (
@@ -59,7 +67,7 @@ export default function Amex() {
               <div key={idx}>
                 <div>{inProgressItem}</div>
                 <div>
-                  <button>Move back</button>
+                  <button onClick={() => moveBackToTodo(idx)}>Move back</button>
                   <button>Move to done</button>
                 </div>
               </div>
