@@ -54,6 +54,14 @@ export default function Amex() {
     setDoneList(newDoneList);
   }
 
+  function remove(idx: number): void {
+    const newDoneList = [
+      ...doneList.slice(0, idx),
+      ...doneList.slice(idx + 1, doneList.length + 1),
+    ];
+    setDoneList(newDoneList);
+  }
+
   return (
     <div className="amex-container">
       <div className="add-task-container">
@@ -103,7 +111,7 @@ export default function Amex() {
                 <button onClick={() => moveBackToInProgress(idx)}>
                   Move back
                 </button>
-                <button>Remove</button>
+                <button onClick={() => remove(idx)}>Remove</button>
               </div>
             );
           })}
