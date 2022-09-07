@@ -45,6 +45,15 @@ export default function Amex() {
     setInProgressList(newInProgressList);
   }
 
+  function moveBackToInProgress(idx: number): void {
+    setInProgressList([...inProgressList, doneList[idx]]);
+    const newDoneList = [
+      ...doneList.slice(0, idx),
+      ...doneList.slice(idx + 1, doneList.length + 1),
+    ];
+    setDoneList(newDoneList);
+  }
+
   return (
     <div className="amex-container">
       <div className="add-task-container">
@@ -91,7 +100,9 @@ export default function Amex() {
             return (
               <div key={idx}>
                 <div>{doneItem}</div>
-                <button>Move back</button>
+                <button onClick={() => moveBackToInProgress(idx)}>
+                  Move back
+                </button>
                 <button>Remove</button>
               </div>
             );
